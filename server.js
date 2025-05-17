@@ -10,8 +10,17 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
 app.use(express.json());
+
+const corsOptions = {
+  origin: 'http://localhost:5173', // or 'https://your-vercel-url.vercel.app'
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // Email transporter configuration
 const transporter = nodemailer.createTransport({
