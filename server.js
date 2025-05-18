@@ -9,31 +9,18 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(express.json());
-
-const allowedOrigins = [
-  'http://localhost:5173', // For local dev
-  'https://saireddyganapuram.vercel.app' // ✅ Your deployed frontend
-];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: ['http://localhost:5173', 'https://saireddyganapuram.vercel.app'],
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
-  credentials: true
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); 
 
-// Handle preflight requests
-app.options('*', cors(corsOptions));
+// Middleware
+app.use(express.json());
+
 
 // Email transporter configuration
 const transporter = nodemailer.createTransport({
