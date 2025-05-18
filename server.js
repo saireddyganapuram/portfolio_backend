@@ -12,7 +12,10 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-const allowedOrigins = ['http://localhost:5173', 'https://saireddyganapuram.vercel.app/']; // or 'https://your-vercel-url.vercel.app' or 'http://localhost:3000'
+const allowedOrigins = [
+  'http://localhost:5173', // For local dev
+  'https://saireddyganapuram.vercel.app' // ✅ Your deployed frontend
+];
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -28,6 +31,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+// Handle preflight requests
 app.options('*', cors(corsOptions));
 
 // Email transporter configuration
